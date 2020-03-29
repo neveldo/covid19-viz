@@ -1,0 +1,81 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Covid-19 dataviz">
+    <meta name="author" content="neveldo">
+
+    <title>Covid-19 dataviz</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <header>
+      <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-sm-8 col-md-7 py-4">
+              <h4 class="text-white">A propos</h4>
+              <p class="text-muted">Blabla bla bla</p>
+            </div>
+
+            <div class="col-sm-4 offset-md-1 py-4">
+              <h4 class="text-white">Contact</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" class="text-white">Github</a></li>
+                <li><a href="#" class="text-white">Twitter</a></li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <strong>Covid-19 Dataviz</strong>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main role="main">
+
+      {% block body %}
+      {% endblock %}
+
+    </main>
+
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-right">
+          <a href="#">Remonter en haut</a>
+        </p>
+        <p>&copy; Vincent Brouté</p>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mapael/2.2.0/js/jquery.mapael.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mapael/2.2.0/js/maps/france_departments.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-locale-fr-latest.js"></script>
+    <script src="{{ url_for('static', filename='js/departments.js') }}"></script>
+    {% block js %}
+    {% endblock %}
+  </body>
+</html>

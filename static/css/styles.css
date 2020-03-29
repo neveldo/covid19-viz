@@ -1,0 +1,26 @@
+h2 {
+    font-size: 1.5rem;
+}
+
+.jumbotron {
+    margin-bottom: 0;
+    padding: 2rem 2rem;
+}
+
+.mapael .map {
+    position: relative;
+}
+
+.mapael .mapTooltip {
+    position: absolute;
+    background-color: #fff;
+    moz-opacity: 0.70;
+    opacity: 0.70;
+    filter: alpha(opacity=70);
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 1000;
+    max-width: 200px;
+    display: none;
+    color: #343434;
+}

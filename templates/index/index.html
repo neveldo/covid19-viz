@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section class="jumbotron">
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" width="150px" height="150px"
+             style="float:left;margin-right:20px;"/>
+        <h1 class="jumbotron-heading">Covid-19 Dataviz</h1>
+
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called a
+            jumbotron and three supporting pieces of content. Use it as a starting point to create something more
+            unique.</p>
+
+    </div>
+</section>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h2>Répartition des décès par département</h2>
+                        <div id="death_map">
+                            <div class="map"></div>
+                            <div class="areaLegend"></div>
+                            <div class="plotLegend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h2>Cumul quotidien des décès</h2>
+                        <div id="death_chart">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h2>Cumul quotidien des cas confirmés</h2>
+                        <div id="confirmed_chart">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h2>Cumul quotidien des patients en réanimation</h2>
+                        <div id="resuscitation_chart">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h2>Cumul quotidien du nombre d'hospitalisations</h2>
+                        <div id="hospitalized_chart">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h2>Cumul quotidien du nombre de guéris</h2>
+                        <div id="healed_chart">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(function() {
+            // Init charts
+            var plotlyConfig = {
+                "locale": "fr",
+                "modeBarButtonsToRemove": ["sendDataToCloud", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "lasso2d", "select2d"],
+                "displaylogo": false,
+                "showTips": false
+            };
+
+            var layout = {};
+
+            {% for chart_name in ['death_chart', 'confirmed_chart', 'resuscitation_chart', 'hospitalized_chart', 'healed_chart'] %}
+            Plotly.plot("{{ chart_name }}", {{charts[chart_name] |safe}}, layout, plotlyConfig);
+            {% endfor %}
+
+            // Init map
+            $("#death_map").mapael({
+                map: {
+                    name: "france_departments",
+                    defaultArea: {
+                        attrs: {
+                            fill: "#f4f4e8",
+                            stroke: "#ced8d0"
+                        }
+                    }
+                },
+                legend: {
+                    area: {
+                        title: "Population of France by department",
+                        slices: [
+                            {
+                                max: 300000,
+                                attrs: {
+                                    fill: "#97e766"
+                                },
+                                label: "Less than de 300 000 inhabitants"
+                            },
+                            {
+                                min: 300000,
+                                max: 500000,
+                                attrs: {
+                                    fill: "#7fd34d"
+                                },
+                                label: "Between 100 000 and 500 000 inhabitants"
+                            },
+                            {
+                                min: 500000,
+                                max: 1000000,
+                                attrs: {
+                                    fill: "#5faa32"
+                                },
+                                label: "Between 500 000 and 1 000 000 inhabitants"
+                            },
+                            {
+                                min: 1000000,
+                                attrs: {
+                                    fill: "#3f7d1a"
+                                },
+                                label: "More than 1 million inhabitants"
+                            }
+                        ]
+                    }
+                },
+                plots: departments
+            });
+        });
+
+    </script>
+{% endblock %}
