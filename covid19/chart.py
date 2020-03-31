@@ -8,13 +8,11 @@ def create_plot(data, column):
         raise ValueError("Column not found within dataset")
 
     chart = [
-        go.Scatter(
+        go.Bar(
             x=data.index,
             y=data[column],
-            mode='lines+markers',
-            line_color='#53762C',
-            opacity=0.8,
-            connectgaps=True
+            marker_color='#53762C',
+            opacity=0.8
         )
     ]
 
