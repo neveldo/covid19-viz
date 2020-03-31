@@ -4,10 +4,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Covid-19 dataviz">
+    <meta name="description" content="Covid-19 : les données pour la France">
     <meta name="author" content="neveldo">
 
-    <title>Covid-19 dataviz</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" />
+
+    <title>Covid-19 Data</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet">
 
@@ -17,36 +19,13 @@
   <body>
 
     <header>
-      <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-          <div class="row">
-
-            <div class="col-sm-8 col-md-7 py-4">
-              <h4 class="text-white">A propos</h4>
-              <p class="text-muted">Blabla bla bla</p>
-            </div>
-
-            <div class="col-sm-4 offset-md-1 py-4">
-              <h4 class="text-white">Contact</h4>
-              <ul class="list-unstyled">
-                <li><a href="#" class="text-white">Github</a></li>
-                <li><a href="#" class="text-white">Twitter</a></li>
-              </ul>
-            </div>
-
-          </div>
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom box-shadow bg-dark text-white">
+          <h4 class="my-0 mr-md-auto font-weight-normal">Covid-19 Dataviz</h4>
+          <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-white" href="https://twitter.com/home">Twitter</a>
+            <a class="p-2 text-white" href="https://github.com/neveldo">Github</a>
+          </nav>
         </div>
-      </div>
-      <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-          <a href="#" class="navbar-brand d-flex align-items-center">
-            <strong>Covid-19 Dataviz</strong>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-      </div>
     </header>
 
     <main role="main">
@@ -61,7 +40,7 @@
         <p class="float-right">
           <a href="#">Remonter en haut</a>
         </p>
-        <p>&copy; Vincent Brouté</p>
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Vincent Brouté</p>
       </div>
     </footer>
 
