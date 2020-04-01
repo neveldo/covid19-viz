@@ -1,78 +1,130 @@
+import numpy as np
 import pandas as pd
+import os
 
 class DataSource:
     """
     Data module
     """
 
-    SOURCE_URL = 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv'
+    source_url = 'https://www.data.gouv.fr/fr/datasets/r/63352e38-d353-4b54-bfd1-f1b3ee1cabd7'
+
+    features = ['hospitalized', 'resuscitation', 'healed', 'death']
 
     def __init__(self):
+        self.data = pd.DataFrame()
         self.data_country = pd.DataFrame()
-        self.data_departments = pd.DataFrame()
+        self.overall_data_departments = pd.DataFrame()
         self.counters = {}
         self.max_date = ''
 
+        data_dir = os.path.realpath(os.path.dirname(__file__) + "/../data/")
+
+        self.department_base_data = pd.read_csv(data_dir + "/departments.csv")
+        self.department_base_data.index = self.department_base_data['insee']
+        self.department_base_data = self.department_base_data.sort_index()
 
     def update_data(self):
         """
         Get covid-19 France data from data.gouv.fr
         """
-        data = pd.read_csv(DataSource.SOURCE_URL)
+        self.data = pd.read_csv(DataSource.source_url, sep=';')
+        self.data.columns = ['department', 'sex', 'date'] + DataSource.features
 
-        # Extract France data by day
-        self.data_country = data.copy()
-        self.data_country = self.data_country[(data['granularite'] == 'pays') & (self.data_country['maille_nom'] == 'France')]
-        self.data_country = DataSource._format_dataframe(self.data_country)
-        self.data_country = self.data_country.groupby('date').max()
-        self.data_country = self.data_country.sort_index()
+        self.update_country_data(self.data)
+        self.update_overall_departments_data(self.data)
 
+    def update_country_data(self, data):
+        self.data_country, self.counters, self.max_date = DataSource.get_aggregated_data(data)
 
-        columns = {
-            'confirmed_cumulative': 'confirmed',
-            'death_cumulative': 'death',
-            'resuscitation_cumulative': 'resuscitation',
-            'hospitalized_cumulative': 'hospitalized',
-            'healed_cumulative': 'healed',
-        }
+    @staticmethod
+    def get_aggregated_data(data, department=""):
 
-        self.max_date = self.data_country.index.max()
+        if department != "" and department in pd.unique(data['department']):
+            data = data[(data['department'] == department)]
 
-        for column_cumulative_name, new_column_name in columns.items():
-            # Compute daily values instead from cumulative ones
-            self.data_country = DataSource._add_daily_data(self.data_country, column_cumulative_name, new_column_name)
+        # Compute women death
+        data_women = data.copy()
+        data_women = data_women[(data_women['sex'] == 2)]
+        data_women = data_women\
+            .drop(['department', 'sex'], axis=1)\
+            .groupby('date')\
+            .sum()\
+            .sort_index()
+
+        data = data[(data['sex'] == 0)]
+        data = data\
+            .drop(['department', 'sex'], axis=1)\
+            .groupby('date')\
+            .sum()\
+            .sort_index()
+
+        data['death_women'] = data_women['death']
+
+        max_date = data.index.max()
+
+        counters = {}
+        for feature in DataSource.features + ['death_women']:
+            # Compute daily counts instead from cumulative ones
+            data = DataSource._add_daily_data(data, feature)
 
             # Compute most recent value for each feature
-            self.counters[new_column_name] = self.data_country.at[self.max_date, column_cumulative_name]
+            counters[feature] = data.at[max_date, feature]
 
-        print(self.counters)
+        # Remove first day of data as daily counts will not be valid
+        data = data.iloc[1:]
 
-        # #####################"
+        return data, counters, max_date
 
-        # Compute departments data
-        self.data_departments = data.copy()
-        self.data_departments = self.data_departments[(self.data_departments['granularite'] == 'departement')]
-        self.data_departments = DataSource._format_dataframe(self.data_departments)
-        self.data_departments['entity'] = self.data_departments['entity'].transform(lambda x: x[4:])
-        self.data_departments = self.data_departments.groupby('date').max()
-        self.data_departments = self.data_departments[pd.notna(self.data_departments['entity'])]
+    def update_overall_departments_data(self, data):
+        data = data[(data['sex'] == 0)]
+        data = data\
+            .drop(['date', 'sex'], axis=1)\
+            .groupby('department')\
+            .max()
 
-    @staticmethod
-    def _format_dataframe(dataframe):
-        dataframe = dataframe.loc[:, ['date', 'maille_code', 'cas_confirmes', 'deces', 'reanimation', 'hospitalises', 'gueris']]
-        dataframe.columns = ['date', 'entity', 'confirmed_cumulative', 'death_cumulative', 'resuscitation_cumulative', 'hospitalized_cumulative', 'healed_cumulative']
-        dataframe = dataframe[dataframe['date'] >= '2020-03-01']
+        data = pd.concat([data, self.department_base_data], axis=1)
 
-        return dataframe
+        data['death_per_inhabitants'] = (data['death'] / data['population']) * 100000
+
+        self.overall_data_departments = data
 
     @staticmethod
-    def _add_daily_data(dataframe, column_cumulative_name, new_column_name):
-        cumulative_column = dataframe[column_cumulative_name].copy().reset_index(drop=True)
-        cumulative_column_previous_day = dataframe[column_cumulative_name].copy().reset_index(drop=True)
+    def _add_daily_data(data, feature):
+        new_feature = feature + '_daily'
+
+        cumulative_column = data[feature].copy().reset_index(drop=True)
+
+        cumulative_column_previous_day = data[feature].copy().reset_index(drop=True)
         cumulative_column_previous_day = pd.Series([0]).append(cumulative_column_previous_day, ignore_index=True)
         cumulative_column_previous_day = cumulative_column_previous_day[:-1]
 
-        dataframe[new_column_name] = list(cumulative_column - cumulative_column_previous_day)
+        daily_data = np.array(cumulative_column - cumulative_column_previous_day)
+        daily_data[daily_data < 0] = 0
+        data[new_feature] = daily_data
 
-        return dataframe
+        return data
 
+    def get_overall_departments_data_as_json(self):
+        data = self.overall_data_departments.copy()
+
+        data = data.set_index("department-" + data.index)
+        data = data.loc[:, ['label', 'death', 'death_per_inhabitants', 'insee']]
+
+        quantiles = data['death_per_inhabitants']\
+            .quantile([.2,.4,.6,.8]) \
+            .round(2)
+
+        data['death_per_inhabitants'] = data['death_per_inhabitants'].round(2)
+
+        return data.to_json(orient='index'), quantiles.to_json(orient='index')
+
+    def get_department_label(self, department):
+        if department in self.department_base_data.index:
+            return self.department_base_data.at[department, 'label']
+        return ""
+
+
+if __name__ == "__main__":
+    ds = DataSource()
+    ds.update_data()

@@ -2,7 +2,7 @@ h1 {
     font-size: 2rem;
 }
 
-h2 {
+h3 {
     font-size: 1.1rem;
 }
 
@@ -13,6 +13,7 @@ h2 {
 
 .mapael .map {
     position: relative;
+    padding: 3rem;
 }
 
 .mapael .mapTooltip {
