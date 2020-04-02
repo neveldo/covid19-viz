@@ -10,7 +10,8 @@
         <p>Cette page permet de visualiser l'évolution des principaux chiffres de la maladie à coronavirus 2019 (COVID-19)
             pour la France : nombre de décès, nouveaux cas, patients hospitalisés, réanimations et guérisons. Les données sont
             mises à jour automatiquement. La source des données est "<a href="https://www.data.gouv.fr/fr/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/#_" target="_blank">Données hospitalières relatives à l'épidémie de COVID-19</a>" (Source "Santé publique France", data.gouv.fr).
-            Le code source de l'application est disponible sur <a href="https://github.com/neveldo/covid19-viz" target="_blank">Github</a>.</p>
+            Le code source de l'application est disponible sur <a href="https://github.com/neveldo/covid19-viz" target="_blank">Github</a>.
+            <br />Dernière mise à jour des données : <b>{{ last_update }}</b></p>
 
     </div>
 </section>
@@ -22,15 +23,18 @@
 
         <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-12" id="death_map">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
                         <h3>Répartition des décès par département</h3>
-                        <p><b>Cliquez sur un département pour voir le détail.</b></p>
-                        <div id="death_map">
-                            <div class="map"></div>
-                            <div class="areaLegend"></div>
-                            <div class="plotLegend"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="text-secondary">(Cliquez sur un département pour voir le détail)</p>
+                                <div class="map"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="areaLegend"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,7 +111,7 @@
             var quantiles = {{ overall_departments_quantiles|safe }};
             quantiles = Object.values(quantiles);
             var slices = [
-                {"max": quantiles[0], "label": "Moins de " + quantiles[0], attrs: {fill: "#edf8e9"}}
+                {"max": quantiles[0], "label": "Moins de " + quantiles[0] + " décès pour 100 000 habitants", attrs: {fill: "#edf8e9"}}
             ];
 
             colors = ['#bae4b3', '#74c476', '#31a354', '#006d2c']
@@ -122,9 +126,9 @@
 
                 if (i < quantiles.length -1) {
                     slice.max = quantiles[i + 1];
-                    slice.label = "Entre " + slice.min + " et " + slice.max;
+                    slice.label = "Entre " + slice.min + " et " + slice.max + " décès pour 100 000 habitants";
                 } else {
-                    slice.label = "Plus de " + slice.min;
+                    slice.label = "Plus de " + slice.min + " décès pour 100 000 habitants";
                 }
                 slices.push(slice);
             }
@@ -135,6 +139,15 @@
                     "content": departments[id]['label'] + " : <b>" + departments[id]['death'] + "</b> décès (<b>" + departments[id]['death_per_inhabitants'] + "</b> pour 100 000 habitants)"
                 };
                 departments[id]['href'] = "/departement/" + departments[id]['insee'];
+
+console.log(departments[id]);
+                if (departments[id]['insee'] === '{{ department }}') {
+                    departments[id]['href'] = "/";
+                    delete departments[id]['value'];
+                    departments[id]['attrs'] = {
+                        "fill": "#F38A03",
+                    };
+                }
             }
 
             $("#death_map").mapael({
