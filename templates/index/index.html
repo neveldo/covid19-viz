@@ -26,7 +26,7 @@
             <div class="col-md-12" id="death_map">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
-                        <h3>Répartition des décès par département</h3>
+                        <h3>Nombre de décès liés au Covid-19 pour 100 000 habitants</h3>
                         <div class="row">
                             <div class="col-md-6">
                                 <p class="text-secondary">(Cliquez sur un département pour voir le détail)</p>
@@ -153,6 +153,10 @@ console.log(departments[id]);
             $("#death_map").mapael({
                 "map": {
                     "name": "france_departments_domtom",
+                    zoom: {
+                        enabled: true,
+                        maxLevel: 10
+                    },
                     "defaultArea": {
                         "attrs": {
                             "fill": "#f4f4e8",
@@ -162,7 +166,6 @@ console.log(departments[id]);
                 },
                 "legend": {
                     "area": {
-                        "title": "Nombre de décès liés au Covid-19 pour 100 000 habitants",
                         "slices": slices
                     }
                 },

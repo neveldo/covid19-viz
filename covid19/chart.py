@@ -32,7 +32,10 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
                 marker_color='#006d2c',
                 opacity=0.8
             ),
-        ]
+        ],
+        'layout': go.Layout(
+            margin=dict(l=30, r=0, b=20, t=20),
+        )
     }
 
     if overlap_column != '':
@@ -47,7 +50,8 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
         )
         chart['layout'] = go.Layout(
             barmode='overlay',
-            legend_orientation="h"
+            legend_orientation="h",
+            margin=dict(l=30, r=0, b=20, t=20),
         )
 
     return json.dumps(chart, cls=plotly.utils.PlotlyJSONEncoder)
