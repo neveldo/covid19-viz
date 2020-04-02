@@ -2,31 +2,19 @@
 
 ## Description
 
-Vizualisation of Covid-19 data from France.
+This application allows users to vizualize some key data of the evolution of Covid-19 pandemy for France at country and departments scale.
+The data are automatically updated every day. The source is ["Santé publique France"](https://www.data.gouv.fr/fr/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/#_) .
 
 ## Run app
 
 Whith Makefile :
 
+Run Flask debug server : 
 ```
-make run
+make run-dev
 ```
 
-Or manually :
-
+Run the app through uwsgi + nginx server :
 ```
-# Delete previous running container
-docker stop covid19viz_01;docker rm covid19viz_01;
-
-# Build the docker image
-docker build -f docker/Dockerfile -t neveldo/covid19viz:1.0 .
-
-# Create a container from the image
-docker create --name=covid19viz_01 --hostname=host01 neveldo/covid19viz:1.0
-
-# Start the container
-docker start covid19viz_01 -d
-
-# Or create & run a container
-docker run -d --name covid19viz_01 neveldo/covid19viz:1.0
+make run-prod
 ```
