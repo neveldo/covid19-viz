@@ -69,8 +69,8 @@ def _get_charts(data):
     """
 
     charts = [
-        {'column': 'hospitalized', 'chart_type': go.Scatter},
-        {'column': 'resuscitation', 'chart_type': go.Scatter},
+        {'column': 'hospitalized', 'chart_type': go.Scatter, 'chart_options': {'line_shape': 'spline'}},
+        {'column': 'resuscitation', 'chart_type': go.Scatter, 'chart_options': {'line_shape': 'spline'}},
         {'column': 'healed_daily'},
         {'column': 'death_daily', 'column_label': 'Total', 'overlap_column': 'death_women_daily', 'overlap_column_label': 'Dont femmes'},
         {'column': 'death', 'column_label': 'Total', 'overlap_column': 'death_women', 'overlap_column_label': 'Dont femmes'},

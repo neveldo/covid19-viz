@@ -7,7 +7,7 @@ Turns dataframes for covid-19 data into plotly charts
 """
 
 
-def create_plot(data, column, column_label='', overlap_column='', overlap_column_label='', chart_type=go.Bar):
+def create_plot(data, column, column_label='', overlap_column='', overlap_column_label='', chart_type=go.Bar, chart_options={}):
     """Returns aggregated data at country or department scale
     Args:
         data: pandas dataframe wich contains the data from data.gouv.fr
@@ -31,7 +31,8 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
                 x=data.index,
                 y=data[column],
                 marker_color='#006d2c',
-                opacity=0.8
+                opacity=0.8,
+                **chart_options
             ),
         ],
         'layout': go.Layout(
@@ -46,7 +47,8 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
                 x=data.index,
                 y=data[overlap_column],
                 marker_color='#343A40',
-                opacity=0.8
+                opacity=0.8,
+                **chart_options
             )
         )
         chart['layout'] = go.Layout(
