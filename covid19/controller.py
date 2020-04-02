@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from covid19 import chart
 from covid19 import datasource
 from datetime import datetime
+import plotly.graph_objs as go
 
 """
 Main app controller
@@ -66,19 +67,19 @@ def _get_charts(data):
     Returns:
         dict that contains chart confs as JSON strings
     """
-    charts = dict.fromkeys(datasource.DataSource.features)
-    for chart_name in charts:
-        if chart_name == 'death':
-            charts[chart_name] = chart.create_plot(
-                data,
-                chart_name + "_daily",
-                "Total",
-                chart_name + "_women_daily",
-                "Dont femmes"
-            )
-        else:
-            charts[chart_name] = chart.create_plot(
-                data,
-                chart_name + "_daily"
-            )
-    return charts
+
+    charts = [
+        {'column': 'hospitalized', 'chart_type': go.Scatter},
+        {'column': 'resuscitation', 'chart_type': go.Scatter},
+        {'column': 'healed_daily'},
+        {'column': 'death_daily', 'column_label': 'Total', 'overlap_column': 'death_women_daily', 'overlap_column_label': 'Dont femmes'},
+        {'column': 'death', 'column_label': 'Total', 'overlap_column': 'death_women', 'overlap_column_label': 'Dont femmes'},
+    ]
+
+    json_charts = {}
+    for chart_conf in charts:
+        json_charts[chart_conf['column']] = chart.create_plot(
+            data=data,
+            **chart_conf
+        )
+    return json_charts

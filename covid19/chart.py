@@ -7,7 +7,7 @@ Turns dataframes for covid-19 data into plotly charts
 """
 
 
-def create_plot(data, column, column_label='', overlap_column='', overlap_column_label=''):
+def create_plot(data, column, column_label='', overlap_column='', overlap_column_label='', chart_type=go.Bar):
     """Returns aggregated data at country or department scale
     Args:
         data: pandas dataframe wich contains the data from data.gouv.fr
@@ -15,6 +15,7 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
         column_label: label to display in the chart legend for the column
         overlap_column: column name to add on overlapping bar in the chart
         overlap_column_label: label to display in the chart legend for the overlapping column
+        chart_type: class of chart to create
 
     Returns:
         Plotly chart conf as JSON string
@@ -25,7 +26,7 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
 
     chart = {
         'data': [
-            go.Bar(
+            chart_type(
                 name=column_label,
                 x=data.index,
                 y=data[column],
@@ -34,13 +35,13 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
             ),
         ],
         'layout': go.Layout(
-            margin=dict(l=30, r=0, b=20, t=20),
+            margin=dict(l=30, r=0, b=30, t=20),
         )
     }
 
     if overlap_column != '':
         chart['data'].append(
-            go.Bar(
+            chart_type(
                 name=overlap_column_label,
                 x=data.index,
                 y=data[overlap_column],
@@ -51,7 +52,7 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
         chart['layout'] = go.Layout(
             barmode='overlay',
             legend_orientation="h",
-            margin=dict(l=30, r=0, b=20, t=20),
+            margin=dict(l=30, r=0, b=30, t=20),
         )
 
     return json.dumps(chart, cls=plotly.utils.PlotlyJSONEncoder)

@@ -15,7 +15,7 @@ class DataSource:
 
     source_url = 'https://www.data.gouv.fr/fr/datasets/r/63352e38-d353-4b54-bfd1-f1b3ee1cabd7'
 
-    features = ['hospitalized', 'resuscitation', 'healed', 'death']
+    basic_features = ['hospitalized', 'resuscitation', 'healed', 'death']
 
     def __init__(self):
         self.data = pd.DataFrame()
@@ -35,7 +35,7 @@ class DataSource:
     def update_data(self):
         """Update overall data from data.gouv.fr file"""
         self.data = pd.read_csv(DataSource.source_url, sep=';')
-        self.data.columns = ['department', 'sex', 'date'] + DataSource.features
+        self.data.columns = ['department', 'sex', 'date'] + DataSource.basic_features
 
         self.update_country_data(self.data)
         self.update_overall_departments_data(self.data)
@@ -108,7 +108,7 @@ class DataSource:
         max_date = data.index.max()
 
         counters = {}
-        for feature in DataSource.features + ['death_women']:
+        for feature in DataSource.basic_features + ['death_women']:
             # Compute daily counts instead from cumulative ones
             data = DataSource._add_daily_data(data, feature)
 
@@ -195,3 +195,4 @@ class DataSource:
 if __name__ == "__main__":
     ds = DataSource()
     ds.update_data()
+    print(ds.data_country.columns)

@@ -42,7 +42,7 @@
                     <div class="card-body">
                         <h3>Nombre de décès par jour ({{ label }})</h3>
                         <p>Total : <b>{{ counters['death']|int }}</b> au {{ max_date }}</p>
-                        <div id="death_chart">
+                        <div id="death_daily_chart">
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
             <div class="col-md-6">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
-                        <h3>Nombre de nouveaux patients en réanimation par jour ({{ label }})</h3>
+                        <h3>Nombre de patients en cours de réanimation par jour ({{ label }})</h3>
                         <p>Total : <b>{{ counters['resuscitation']|int }}</b> au {{ max_date }}</p>
                         <div id="resuscitation_chart">
                         </div>
@@ -62,7 +62,7 @@
             <div class="col-md-6">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
-                        <h3>Nombre de nouvelles hospitalisations par jour ({{ label }})</h3>
+                        <h3>Nombre de patients en cours d'hospitalisation par jour ({{ label }})</h3>
                         <p>Total : <b>{{ counters['hospitalized']|int }}</b> au {{ max_date }}</p>
                         <div id="hospitalized_chart">
                         </div>
@@ -75,7 +75,17 @@
                     <div class="card-body">
                         <h3>Nombre de patients guéris par jour ({{ label }})</h3>
                         <p>Total : <b>{{ counters['healed']|int }}</b> au {{ max_date }}</p>
-                        <div id="healed_chart">
+                        <div id="healed_daily_chart">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h3>Nombre de décès cumulés par jour ({{ label }})</h3>
+                        <div id="death_chart">
                         </div>
                     </div>
                 </div>
