@@ -5,6 +5,8 @@
 This application allows users to vizualize some key data of the evolution of Covid-19 pandemy for France at country and departments scale.
 The data are automatically updated every day. The source is ["Santé publique France"](https://www.data.gouv.fr/fr/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/#_) .
 
+The app is available online here : [http://covid19.vincentbroute.fr/](http://covid19.vincentbroute.fr/)
+
 ## Run app
 
 Whith Makefile :
