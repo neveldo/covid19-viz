@@ -106,13 +106,14 @@
                 "locale": "fr",
                 "modeBarButtonsToRemove": ["sendDataToCloud", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "lasso2d", "select2d"],
                 "displaylogo": false,
-                "showTips": false
+                "showTips": false,
             };
 
             var layout = {};
 
             {% for chart_name in charts %}
-            Plotly.plot("{{ chart_name }}_chart", {{charts[chart_name]|safe}}, layout, plotlyConfig);
+            var plotlyData = {{charts[chart_name]|safe}};
+            Plotly.plot("{{ chart_name }}_chart", plotlyData["data"], plotlyData["layout"], plotlyConfig);
             {% endfor %}
 
             // Init map
@@ -149,7 +150,6 @@
                 };
                 departments[id]['href'] = "/departement/" + departments[id]['insee'];
 
-console.log(departments[id]);
                 if (departments[id]['insee'] === '{{ department }}') {
                     departments[id]['href'] = "/";
                     delete departments[id]['value'];
