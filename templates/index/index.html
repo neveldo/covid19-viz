@@ -30,8 +30,20 @@
                                 <div class="map"></div>
                             </div>
                             <div class="col-md-6">
+                                <p>Légende</p>
                                 <div class="areaLegend"></div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h3>Nombre de décès cumulés par jour ({{ label }})</h3>
+                        <p><b>{{ ((counters['death_women'] / counters['death']) *100)|round(1) }}%</b> de femmes, <b>{{ (((counters['death'] - counters['death_women']) / counters['death']) *100)|round(1) }}% d'hommes</b></p>
+                        <div id="death_chart">
                         </div>
                     </div>
                 </div>
@@ -41,7 +53,7 @@
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
                         <h3>Nombre de décès par jour ({{ label }})</h3>
-                        <p>Total : <b>{{ counters['death']|int }}</b> au {{ max_date }}</p>
+                        <p><b>{{ counters['death']|int }}</b> décédées au total</p>
                         <div id="death_daily_chart">
                         </div>
                     </div>
@@ -74,18 +86,8 @@
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
                         <h3>Nombre de patients guéris par jour ({{ label }})</h3>
-                        <p>Total : <b>{{ counters['healed']|int }}</b> au {{ max_date }}</p>
+                        <p><b>{{ counters['healed']|int }}</b> personnes guéries au total</p>
                         <div id="healed_daily_chart">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-body">
-                        <h3>Nombre de décès cumulés par jour ({{ label }})</h3>
-                        <div id="death_chart">
                         </div>
                     </div>
                 </div>
@@ -173,6 +175,7 @@ console.log(departments[id]);
                 },
                 "legend": {
                     "area": {
+                        "marginBottom": 20,
                         "slices": slices
                     }
                 },

@@ -195,4 +195,4 @@ class DataSource:
 if __name__ == "__main__":
     ds = DataSource()
     ds.update_data()
-    print(ds.data_country.columns)
+    print(ds.counters)

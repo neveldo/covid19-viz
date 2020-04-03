@@ -26,7 +26,7 @@ def index():
         department='',
         counters=ds.counters,
         max_date=datetime.strptime(ds.max_date, "%Y-%m-%d").strftime("%d/%m/%Y"),
-        last_update=datetime.strptime(ds.last_update, "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y à %H:%M"),
+        last_update=datetime.strptime(ds.last_update, "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y à %Hh%M"),
         charts=charts,
         overall_departments_data=overall_departments_data,
         overall_departments_quantiles=overall_departments_quantiles
@@ -55,7 +55,7 @@ def view_department(department):
         department=department,
         counters=counters,
         max_date=datetime.strptime(max_date, "%Y-%m-%d").strftime("%d/%m/%Y"),
-        last_update=datetime.strptime(ds.last_update, "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y à %H:%M"),
+        last_update=datetime.strptime(ds.last_update, "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y à %Hh%M"),
         charts=charts,
         overall_departments_data=overall_departments_data,
         overall_departments_quantiles=overall_departments_quantiles
