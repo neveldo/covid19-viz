@@ -57,7 +57,7 @@
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
                         <h3>Nombre de décès cumulés par jour ({{ label }})</h3>
-                        <p><b>{{ counters.death_daily }}</b> nouveaux décès le {{ max_date }}. <b>{{ ((counters['death_women'] / counters['death']) *100)|round(1) }}%</b> de femmes et <b>{{ (((counters['death'] - counters['death_women']) / counters['death']) *100)|round(1) }}% d'hommes</b>.</p>
+                        <p><b>{{ ((counters['death_women'] / counters['death']) *100)|round(1) }}%</b> de femmes, <b>{{ (((counters['death'] - counters['death_women']) / counters['death']) *100)|round(1) }}% d'hommes</b>.</p>
                         <div id="death_chart">
                         </div>
                     </div>
