@@ -7,7 +7,7 @@ The data are automatically updated every day. The source is ["Santé publique Fr
 
 The app is available online here : [http://covid19.vincentbroute.fr/](http://covid19.vincentbroute.fr/)
 
-![app preview](https://raw.githubusercontent.com/neveldo/covid19-viz/master/static/images/twitter-image.png)
+<img src="https://raw.githubusercontent.com/neveldo/covid19-viz/master/static/images/twitter-image.png" width="500px" height="500px" />
 
 ## Run app
 
