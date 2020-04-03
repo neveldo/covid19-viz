@@ -108,7 +108,7 @@ class DataSource:
         max_date = data.index.max()
 
         counters = {}
-        for feature in DataSource.basic_features + ['death_women']:
+        for feature in DataSource.basic_features + ['death_women', 'death_daily']:
             # Compute daily counts instead from cumulative ones
             data = DataSource._add_daily_data(data, feature)
 

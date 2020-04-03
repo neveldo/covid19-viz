@@ -32,6 +32,21 @@
                             <div class="col-md-6">
                                 <p>Légende</p>
                                 <div class="areaLegend"></div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="key-indicator">
+                                            <span class="key-value">{{ counters.death_daily }}</span>
+                                            <br /> nouveaux décès le {{ max_date }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="key-indicator">
+                                            <span class="key-value">{{ counters['death']|int }}</span>
+                                            <br /> décès au total
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -42,7 +57,7 @@
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
                         <h3>Nombre de décès cumulés par jour ({{ label }})</h3>
-                        <p><b>{{ ((counters['death_women'] / counters['death']) *100)|round(1) }}%</b> de femmes, <b>{{ (((counters['death'] - counters['death_women']) / counters['death']) *100)|round(1) }}% d'hommes</b></p>
+                        <p><b>{{ counters.death_daily }}</b> nouveaux décès le {{ max_date }}. <b>{{ ((counters['death_women'] / counters['death']) *100)|round(1) }}%</b> de femmes et <b>{{ (((counters['death'] - counters['death_women']) / counters['death']) *100)|round(1) }}% d'hommes</b>.</p>
                         <div id="death_chart">
                         </div>
                     </div>
