@@ -51,8 +51,8 @@
             <div class="col-md-6">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
-                        <h3>Nombre de patients en cours de réanimation par jour ({{ label }})</h3>
-                        <p>Total : <b>{{ counters['resuscitation']|int }}</b> au {{ max_date }}</p>
+                        <h3>Nombre de patients en réanimation par jour ({{ label }})</h3>
+                        <p><b>{{ counters['resuscitation']|int }}</b> personnes en réanimation le {{ max_date }}</p>
                         <div id="resuscitation_chart">
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
                         <h3>Nombre de patients en cours d'hospitalisation par jour ({{ label }})</h3>
-                        <p>Total : <b>{{ counters['hospitalized']|int }}</b> au {{ max_date }}</p>
+                        <p><b>{{ counters['hospitalized']|int }}</b> personnes en cours d'hospitalisation {{ max_date }}</p>
                         <div id="hospitalized_chart">
                         </div>
                     </div>
