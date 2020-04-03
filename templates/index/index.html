@@ -16,7 +16,7 @@
 <div class="album py-5 bg-light">
     <div class="container">
 
-        <h2>{% if (label != 'France'): %}<a href="/">France</a> &gt; {% endif %}{{ label }} (Mise à jour : {{ last_update }})</h2>
+        <h2 id="data">{% if (label != 'France'): %}<a href="/">France</a> &gt; {% endif %}{{ label }} (Mise à jour : {{ last_update }})</h2>
 
         <div class="row">
 
@@ -163,7 +163,7 @@
                 departments[id]['tooltip'] = {
                     "content": departments[id]['label'] + " : <b>" + departments[id]['death'] + "</b> décès (<b>" + departments[id]['death_per_inhabitants'] + "</b> pour 100 000 habitants)"
                 };
-                departments[id]['href'] = "/departement/" + departments[id]['insee'];
+                departments[id]['href'] = "/departement/" + departments[id]['insee'] + "#data";
 
                 if (departments[id]['insee'] === '{{ department }}') {
                     departments[id]['href'] = "/";

@@ -157,7 +157,7 @@ class DataSource:
         data = data.loc[:, ['label', 'death', 'death_per_inhabitants', 'insee']]
 
         quantiles = data['death_per_inhabitants'] \
-            .quantile([.2, .4, .6, .8]) \
+            .quantile([.25, .5, .75, .949]) \
             .round(2)
 
         data['death_per_inhabitants'] = data['death_per_inhabitants'].round(2)
