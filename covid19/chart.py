@@ -30,7 +30,7 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
                 name=column_label,
                 x=data.index,
                 y=data[column],
-                marker_color='#006d2c',
+                marker_color='#31a354',
                 opacity=0.8,
                 **chart_options
             ),
@@ -46,7 +46,7 @@ def create_plot(data, column, column_label='', overlap_column='', overlap_column
                 name=overlap_column_label,
                 x=data.index,
                 y=data[overlap_column],
-                marker_color='#343A40',
+                marker_color='#006837',
                 opacity=0.8,
                 **chart_options
             )

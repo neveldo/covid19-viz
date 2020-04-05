@@ -136,10 +136,10 @@
             var quantiles = {{ overall_departments_quantiles|safe }};
             quantiles = Object.values(quantiles);
             var slices = [
-                {"max": quantiles[0], "label": "Moins de " + quantiles[0] + " décès pour 100 000 habitants", attrs: {fill: "#edf8e9"}}
+                {"max": quantiles[0], "label": "Moins de " + quantiles[0] + " décès pour 100 000 habitants", attrs: {fill: "#ffffcc"}}
             ];
 
-            colors = ['#bae4b3', '#74c476', '#31a354', '#006d2c']
+            colors = ['#c2e699', '#78c679', '#31a354', '#006837']
             for (var i = 0; i < quantiles.length; i++) {
                 var slice = {
                     attrs: {
