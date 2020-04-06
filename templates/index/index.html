@@ -23,7 +23,7 @@
             <div class="col-md-12" id="death_map">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
-                        <h3>Nombre de décès liés au Covid-19 pour 100 000 habitants</h3>
+                        <h3>Nombre de décès en milieu hospitalier pour 100 000 habitants</h3>
                         <div class="row">
                             <div class="col-md-6">
                                 <p class="text-secondary">(Cliquez sur un département pour voir le détail)</p>
@@ -56,7 +56,7 @@
             <div class="col-md-12">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
-                        <h3>Nombre de décès cumulés par jour ({{ label }})</h3>
+                        <h3>Nombre de décès en milieu hospitalier cumulés par jour ({{ label }})</h3>
                         <p><b>{{ ((counters['death_women'] / counters['death']) *100)|round(1) }}%</b> de femmes, <b>{{ (((counters['death'] - counters['death_women']) / counters['death']) *100)|round(1) }}% d'hommes</b>.</p>
                         <div id="death_chart">
                         </div>
@@ -67,7 +67,7 @@
             <div class="col-md-6">
                 <div class="card mb-4 box-shadow">
                     <div class="card-body">
-                        <h3>Nombre de décès par jour ({{ label }})</h3>
+                        <h3>Nombre de décès en milieu hospitalier par jour ({{ label }})</h3>
                         <p><b>{{ counters['death']|int }}</b> décédées au total</p>
                         <div id="death_daily_chart">
                         </div>
