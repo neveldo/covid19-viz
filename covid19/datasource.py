@@ -36,9 +36,18 @@ class DataSource:
         """Update overall data from data.gouv.fr file"""
         self.data = pd.read_csv(DataSource.source_url, sep=';')
         self.data.columns = ['department', 'sex', 'date'] + DataSource.basic_features
+        self.data['date'] = self.data['date'].apply(DataSource.clean_dates)
 
         self.update_country_data(self.data)
         self.update_overall_departments_data(self.data)
+
+    @staticmethod
+    def clean_dates(date):
+        """Fix wrong date format"""
+        if "/" in date:
+            split_date = date.split("/")
+            date = split_date[2] + "-" + split_date[1] + "-" + split_date[0]
+        return date
 
     def update_country_data(self, data):
         """Update country data
@@ -190,7 +199,6 @@ class DataSource:
                         return True
 
         return False
-
 
 if __name__ == "__main__":
     ds = DataSource()
