@@ -37,7 +37,7 @@ class DataSource:
         self.data = pd.read_csv(DataSource.source_url, sep=';')
         self.data.columns = ['department', 'sex', 'date'] + DataSource.basic_features
         self.data['date'] = self.data['date'].apply(DataSource.clean_dates)
-        self.data.drop_duplicates()
+        self.data = self.data.drop_duplicates()
 
         self.update_country_data(self.data)
         self.update_overall_departments_data(self.data)
