@@ -15,6 +15,7 @@ class DataSource:
 
     source_url = 'https://www.data.gouv.fr/fr/datasets/r/63352e38-d353-4b54-bfd1-f1b3ee1cabd7'
 
+    columns = ['hospitalized', 'resuscitation', 'conv_hosp', 'ssr', 'other', 'healed', 'death']
     basic_features = ['hospitalized', 'resuscitation', 'healed', 'death']
 
     def __init__(self):
@@ -35,7 +36,7 @@ class DataSource:
     def update_data(self):
         """Update overall data from data.gouv.fr file"""
         self.data = pd.read_csv(DataSource.source_url, sep=';')
-        self.data.columns = ['department', 'sex', 'date'] + DataSource.basic_features
+        self.data.columns = ['department', 'sex', 'date'] + DataSource.columns
         self.data['date'] = self.data['date'].apply(DataSource.clean_dates)
         self.data = self.data.drop_duplicates()
 
